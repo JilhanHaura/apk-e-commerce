@@ -1,62 +1,61 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
-import 'package:projectmobile/customer/dashboardScreen.dart';
 
-class AddForm extends StatefulWidget {
-  // const AddForm({super.key});
-  const AddForm({required this.username});
-  final String username;
+class editproduct extends StatefulWidget {
+  const editproduct({super.key, required this.id});
+  final String id;
   @override
-  State<AddForm> createState() => _AddFormState();
+  State<editproduct> createState() => _editproductState();
 }
 
-class _AddFormState extends State<AddForm> {
-  final _formKey = GlobalKey<FormState>();
-  String tittle = "";
-  String description = "";
-  String price = "";
-  // String discount = "";
-  // String time = "";
+class _editproductState extends State<editproduct> {
+  final tittlController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final priceController = TextEditingController();
 
-  Future<void> onSubmitPressed() async {
-    final bool? isValid = _formKey.currentState?.validate();
-
-    if (isValid == true) {
-      String url = "http://project3.test/new/addproduct.php";
-      try {
-        // DateTime now = DateTime.now();
-        // time =
-        //     "${now.year}-${now.month}-${now.day} ${now.hour}:${now.minute}:${now.second}";
-        await http.post(Uri.parse(url), body: {
-          'tittle': tittle,
-          'description': description,
-          'price': price,
-          // 'time': time,
-          // 'discount': discount,
-        }).then((Response) => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DashboardScreen()))
-            });
-      } catch (exc) {
-        debugPrint(exc.toString());
-      }
+  void loadDataProduct() async {
+    String url = "http://project3.test/new/addproduct.php?id=${widget.id}";
+    try {
+      var response = await http.get(Uri.parse(url));
+      var result = jsonDecode(response.body);
+      tittlController.text = result['tittle'];
+      descriptionController.text = result['description'];
+      priceController.text = result['price'];
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 
+  void onUpdatePressed() async {
+    String url = "http://project3.test/new/update.php";
+    try {
+      await http.post(Uri.parse(url), body: {
+        'id': widget.id,
+        'tittle': tittlController.text,
+        'description': descriptionController.text,
+        'price': priceController.text,
+      }).then((value) => Navigator.pop(context));
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
           child: Form(
-        key: _formKey,
+        // key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           // ignore: prefer_const_literals_to_create_immutables
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.fromLTRB(30, 30, 30, 30),
-              child: Text("Add Product",
+              child: Text("Edit Product",
                   style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -65,6 +64,7 @@ class _AddFormState extends State<AddForm> {
             Padding(
                 padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
                 child: TextFormField(
+                  controller: tittlController,
                   autocorrect: true,
                   // ignore: prefer_const_constructors
                   decoration: InputDecoration(
@@ -80,7 +80,7 @@ class _AddFormState extends State<AddForm> {
                       child: const Icon(Icons.title),
                     ),
                     filled: true,
-                    fillColor: Color.fromARGB(255, 245, 202, 64),
+                    fillColor: Color.fromARGB(255, 248, 154, 235),
                     border: const OutlineInputBorder(
                       borderSide: BorderSide(
                           color: Colors.black,
@@ -97,11 +97,12 @@ class _AddFormState extends State<AddForm> {
                     }
                     return null;
                   },
-                  onChanged: ((value) => tittle = value),
+                  // onChanged: ((value) => tittle = value),
                 )),
             Padding(
                 padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
                 child: TextFormField(
+                  controller: descriptionController,
                   decoration: const InputDecoration(
                     hintText: "Description",
                     labelText: "Entri Description Product",
@@ -115,7 +116,7 @@ class _AddFormState extends State<AddForm> {
                       child: Icon(Icons.description),
                     ),
                     filled: true,
-                    fillColor: Color.fromARGB(255, 245, 202, 64),
+                    fillColor: Color.fromARGB(255, 248, 154, 235),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                           color: Colors.black,
@@ -133,11 +134,12 @@ class _AddFormState extends State<AddForm> {
                     }
                     return null;
                   },
-                  onChanged: ((value) => description = value),
+                  // onChanged: ((value) => description = value),
                 )),
             Padding(
                 padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
                 child: TextFormField(
+                  controller: priceController,
                   decoration: const InputDecoration(
                     hintText: "Price",
                     labelText: "Entri Your Price",
@@ -151,7 +153,7 @@ class _AddFormState extends State<AddForm> {
                       child: Icon(Icons.price_change),
                     ),
                     filled: true,
-                    fillColor: Color.fromARGB(255, 245, 202, 64),
+                    fillColor: Color.fromARGB(255, 248, 154, 235),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                           color: Colors.black,
@@ -169,47 +171,18 @@ class _AddFormState extends State<AddForm> {
 
                     return null;
                   },
-                  onChanged: ((value) => price = value),
+                  // onChanged: ((value) => price = value),
                 )),
-            // Padding(
-            //     padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
-            //     child: TextFormField(
-            //       decoration: const InputDecoration(
-            //         hintText: "TimeStamp",
-            //         labelText: "Timestamp",
-            //         labelStyle: TextStyle(
-            //             fontSize: 16,
-            //             color: Colors.black,
-            //             fontWeight: FontWeight.normal),
-            //         suffixIcon: Align(
-            //           widthFactor: 1.0,
-            //           heightFactor: 1.0,
-            //           child: Icon(Icons.discount),
-            //         ),
-            //         filled: true,
-            //         fillColor: Color.fromARGB(255, 245, 202, 64),
-            //         border: OutlineInputBorder(
-            //           borderSide: BorderSide(
-            //               color: Colors.black,
-            //               width: 3.0,
-            //               style: BorderStyle.solid),
-            //           borderRadius: BorderRadius.all(
-            //             Radius.circular(0),
-            //           ),
-            //         ),
-            //       ),
-            //       onChanged: ((value) => time = value),
-            //     )),
             const Divider(height: 30),
             ElevatedButton(
-                child: const Text('SEND'),
+                child: const Text('Update'),
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 245, 202, 64),
+                  primary: Color.fromARGB(255, 248, 154, 235),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0),
                   ),
                 ),
-                onPressed: onSubmitPressed),
+                onPressed: onUpdatePressed),
           ],
         ),
       )),

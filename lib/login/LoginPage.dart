@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
-    final deviceWidht = MediaQuery.of(context).size.width;
+    // final deviceWidht = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
           child: Column(

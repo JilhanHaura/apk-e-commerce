@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectmobile/admin/addform.dart';
-import 'package:projectmobile/admin/adminscreen.dart';
-import 'package:projectmobile/admin/kategoriform.dart';
+import 'package:projectmobile/admin/dashboard/dashboard.dart';
 
 import 'package:projectmobile/customer/dashboardScreen.dart'
     show DashboardScreen;
@@ -23,14 +21,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'PROJECT 3',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
       ),
       home: LoginPage(),
       routes: <String, WidgetBuilder>{
-        '/Admin': (BuildContext context) => new AddForm(
+        '/Admin': (BuildContext context) => new AdminDashboard(
               username: username,
             ),
-        '/Customer': (BuildContext context) => new DashboardScreen()
+        '/Customer': (BuildContext context) => new DashboardScreen(
+              username: username,
+            )
       },
     );
   }

@@ -1,33 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:projectmobile/customer/Details/detailproduct.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:projectmobile/customer/CartWidget/homechart.dart';
 
-class BestProduct extends StatefulWidget {
-  const BestProduct({Key? key}) : super(key: key);
+class ProductDetailScreen extends StatefulWidget {
+  const ProductDetailScreen({Key? key}) : super(key: key);
 
   @override
-  State<BestProduct> createState() => _BestProductState();
+  _ProductDetailScreenState createState() => _ProductDetailScreenState();
 }
 
-class _BestProductState extends State<BestProduct> {
-  List listData = [];
-  void getData() async {
-    var response =
-        await http.get(Uri.parse('http://project3.test/new/getproduct.php'));
-    setState(() {
-      listData = jsonDecode(response.body);
-    });
-    debugPrint("${listData.length}");
-  }
-
-  @override
-  void initState() {
-    getData();
-    super.initState();
-  }
-
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int _quantity = 1;
 
   void _incrementQuantity() {
@@ -164,156 +146,116 @@ class _BestProductState extends State<BestProduct> {
           "https://media.istockphoto.com/id/684133912/id/foto/latar-belakang-aksesoris-bayi.jpg?s=2048x2048&w=is&k=20&c=AaVNAk6L7PAJZFcYphWsr7xhC7BuPfb0kC8c-dBPYKA=",
     },
   ];
-
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        // childAspectRatio: 0.9,
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        mainAxisExtent: 525,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Baju Anak"),
       ),
-      itemCount: listData.length,
-      itemBuilder: (_, index) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              10.0,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Hero(
+              tag: "Baju Anak",
+              child: Image.network(
+                "https://media.istockphoto.com/id/1307563401/id/foto/botol-bayi-cincin-gigi-serbet-dan-dot-diisolasi-di-latar-belakang-putih.jpg?s=2048x2048&w=is&k=20&c=peBQ1IRaYgFO_KBeYrsU9ong8b_ddwmqjPeSWqgP50U=",
+              ),
             ),
-            color: Color.fromARGB(255, 248, 154, 235),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(13.0),
-                  topRight: Radius.circular(13.0),
-                ),
-                child: Image.network(
-                  "${gridMap.elementAt(index)['images']}",
-                  height: 300,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton(
-                      onPressed: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProductDetailScreen()))
-                      },
-                      child: Text(
-                        listData[index]['tittle'],
-                        style: Theme.of(context).textTheme.subtitle1!.merge(
-                              const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        listData[index]['description'],
-                        style: Theme.of(context).textTheme.subtitle1!.merge(
-                              const TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 13),
-                            ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Rp. ' + listData[index]['price'],
+            SizedBox(height: 20.0),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Baju Anak",
                         style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black),
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Row(
-                          children: const [
-                            Icon(
-                              Icons.add_shopping_cart,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Text(
-                              "Beli",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
+                    ],
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      RatingBar.builder(
+                        initialRating: 3,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 25,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
                         ),
-                        const SizedBox(
-                          width: 8,
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
+                      Spacer(),
+                      IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: _quantity > 1 ? _decrementQuantity : null,
+                      ),
+                      Text(
+                        _quantity.toString(),
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                              ),
-                              onPressed:
-                                  _quantity > 1 ? _decrementQuantity : null,
-                            ),
-                            Text(
-                              _quantity.toString(),
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                              onPressed: _incrementQuantity,
-                            ),
-                          ],
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: _incrementQuantity,
+                      ),
+                      SizedBox(width: 10.0),
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  Text(
+                    " Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.                    In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. ",
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Rp 10000",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 248, 154, 235),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeCart()))
+                        },
+                        child: Text("Add to Cart"),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                                Color.fromARGB(255, 248, 154, 235))),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
-      },
+            ),
+            SizedBox(height: 10.0),
+          ],
+        ),
+      ),
     );
   }
 }

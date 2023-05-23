@@ -2,22 +2,18 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:projectmobile/customer/Appbar/appbar.dart';
 import 'package:projectmobile/customer/BestProduct/best.dart';
+import 'package:projectmobile/customer/CartWidget/homechart.dart';
 import 'package:projectmobile/customer/Categori/CategoriProduct.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
-
+  // const DashboardScreen({Key? key}) : super(key: key);
+  const DashboardScreen({required this.username});
+  final String username;
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // List<Map<String, dynamic>> __foundProduct = [];
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   __foundProduct =
-  // }
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
@@ -25,10 +21,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       body: ListView(
         children: [
-          //Appbar
-          // AppBarTest(
-          //   username: 'username',
-          // ),
           AppBarTest(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -123,7 +115,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 color: Colors.white,
               )),
           IconButton(
-              onPressed: () => {},
+              onPressed: () => {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeCart()))
+                  },
               icon: const Icon(
                 Icons.shopping_bag,
                 size: 30,
