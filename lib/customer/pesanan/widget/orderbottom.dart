@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:projectmobile/customer/dashboardScreen.dart';
 
-import 'package:projectmobile/customer/pesanan/homeorder.dart';
-
-class CartBottom extends StatelessWidget {
-  const CartBottom({super.key});
+class OrderBottom extends StatelessWidget {
+  const OrderBottom({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,22 +13,9 @@ class CartBottom extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Total",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-                Text("Rp.60000",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black))
-              ],
+              children: [],
             ),
             Container(
               alignment: Alignment.center,
@@ -44,10 +30,12 @@ class CartBottom extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const HomeOrder()))
+                                builder: (context) => DashboardScreen(
+                                      username: 'username',
+                                    )))
                       },
-                  child: const Text(
-                    "Lakukan Pembayaran",
+                  child: Text(
+                    "Lanjutkan Pesanan",
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

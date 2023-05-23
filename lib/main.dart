@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projectmobile/admin/dashboard/dashboard.dart';
+import 'package:projectmobile/customer/CartWidget/cartbarwidget.dart';
 
 import 'package:projectmobile/customer/dashboardScreen.dart'
     show DashboardScreen;
+import 'package:projectmobile/customer/pesanan/homeorder.dart';
 import 'package:projectmobile/login/LoginPage.dart';
 
 void main() {
@@ -25,10 +27,10 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginPage(),
       routes: <String, WidgetBuilder>{
-        '/Admin': (BuildContext context) => new AdminDashboard(
+        '/Admin': (BuildContext context) => AdminDashboard(
               username: username,
             ),
-        '/Customer': (BuildContext context) => new DashboardScreen(
+        '/Customer': (BuildContext context) => DashboardScreen(
               username: username,
             )
       },
