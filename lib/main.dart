@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projectmobile/admin/dashboard/dashboard.dart';
-import 'package:projectmobile/customer/CartWidget/cartbarwidget.dart';
 
 import 'package:projectmobile/customer/dashboardScreen.dart'
     show DashboardScreen;
-import 'package:projectmobile/customer/pesanan/homeorder.dart';
 import 'package:projectmobile/login/LoginPage.dart';
+import 'package:projectmobile/admin/dashboard/dashboard.dart'
+    show AdminDashboard;
 
 void main() {
   runApp(const MyApp());
@@ -25,13 +25,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
       routes: <String, WidgetBuilder>{
-        '/Admin': (BuildContext context) => AdminDashboard(
-              username: username,
+        '/admin': (BuildContext context) => AdminDashboard(
+              username: "username",
             ),
-        '/Customer': (BuildContext context) => DashboardScreen(
-              username: username,
+        '/customer': (BuildContext context) => DashboardScreen(
+              username: "username",
             )
       },
     );

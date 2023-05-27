@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:projectmobile/customer/Categori/DetailsKategori/detailkategori.dart';
 
 class kategori extends StatefulWidget {
   const kategori({super.key});
@@ -104,7 +105,13 @@ class _kategoriState extends State<kategori> {
                           height: 75,
                         ),
                         TextButton(
-                            onPressed: () => {},
+                            onPressed: () => {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailKategori()))
+                                },
                             child: Text(
                               listData[i]['categories'],
                               style: TextStyle(

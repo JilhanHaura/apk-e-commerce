@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:projectmobile/login/signup.dart';
 import 'package:projectmobile/main.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,9 +32,9 @@ class _LoginPageState extends State<LoginPage> {
       });
     } else {
       if (data[0]['status'] == 'admin') {
-        Navigator.pushReplacementNamed(context, '/Admin');
+        Navigator.pushReplacementNamed(context, '/admin');
       } else if (data[0]['status'] == 'customer') {
-        Navigator.pushReplacementNamed(context, '/Customer');
+        Navigator.pushReplacementNamed(context, '/customer');
       }
       print(response.body);
       setState(() {
@@ -130,6 +131,34 @@ class _LoginPageState extends State<LoginPage> {
                           primary: Color.fromARGB(255, 248, 154, 235),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: constraints.maxHeight * 0.12,
+                    child: Row(
+                      children: [
+                        Text(
+                          "Dont have an account ?",
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignUp()));
+                            },
+                            child: Text(
+                              "Register",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color.fromARGB(255, 248, 154, 235)),
+                            ))
+                      ],
                     ),
                   )
                 ],

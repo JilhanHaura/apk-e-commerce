@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:projectmobile/customer/Details/detailproduct.dart';
 
-class BestProduct extends StatefulWidget {
-  const BestProduct({Key? key}) : super(key: key);
+class DetailKategori extends StatefulWidget {
+  const DetailKategori({Key? key}) : super(key: key);
 
   @override
-  State<BestProduct> createState() => _BestProductState();
+  State<DetailKategori> createState() => _DetailKategoriState();
 }
 
-class _BestProductState extends State<BestProduct> {
+class _DetailKategoriState extends State<DetailKategori> {
   List listData = [];
   void getData() async {
     var response =
@@ -167,155 +167,75 @@ class _BestProductState extends State<BestProduct> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        // childAspectRatio: 0.9,
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        mainAxisExtent: 480,
-      ),
-      itemCount: listData.length,
-      itemBuilder: (_, index) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              10.0,
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Kategori"),
+        ),
+        body: SingleChildScrollView(
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: listData.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.8,
             ),
-            color: Color.fromARGB(255, 248, 154, 235),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(13.0),
-                  topRight: Radius.circular(13.0),
-                ),
-                child: Image.network(
-                  "${gridMap.elementAt(index)['images']}",
-                  height: 300,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(
-                height: 5.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton(
-                      onPressed: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProductDetailScreen(
-                                      id: listData[index]['id'],
-                                    )))
-                      },
-                      child: Text(
-                        listData[index]['tittle'],
-                        style: Theme.of(context).textTheme.subtitle1!.merge(
-                              const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProductDetailScreen(
+                                id: listData[index]['id'],
+                              )));
+                },
+                child: Card(
+                  child: Column(
+                    children: [
+                      Image.network(
+                        "${gridMap.elementAt(index)['images']}",
+                        height: 150,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              listData[index]['tittle'],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0,
+                              ),
                             ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        listData[index]['description'],
-                        style: Theme.of(context).textTheme.subtitle1!.merge(
-                              const TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 13),
+                            SizedBox(height: 8.0),
+                            Text(
+                              listData[index]['description'],
+                              style: TextStyle(
+                                fontSize: 14.0,
+                              ),
                             ),
+                            SizedBox(height: 8.0),
+                            Text(
+                              'Rp. ' + listData[index]['price'],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Rp. ' + listData[index]['price'],
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black),
-                      ),
-                    ),
-                    // const SizedBox(
-                    //   height: 8.0,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     Row(
-                    //       children: const [
-                    //         Icon(
-                    //           Icons.add_shopping_cart,
-                    //           size: 20,
-                    //           color: Colors.white,
-                    //         ),
-                    //         SizedBox(
-                    //           width: 2,
-                    //         ),
-                    //         Text(
-                    //           "Beli",
-                    //           style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontSize: 16,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     const SizedBox(
-                    //       width: 8,
-                    //     ),
-                    //     Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: <Widget>[
-                    //         IconButton(
-                    //           icon: Icon(
-                    //             Icons.remove,
-                    //             color: Colors.white,
-                    //           ),
-                    //           onPressed:
-                    //               _quantity > 1 ? _decrementQuantity : null,
-                    //         ),
-                    //         Text(
-                    //           _quantity.toString(),
-                    //           style: TextStyle(
-                    //               fontSize: 18.0,
-                    //               fontWeight: FontWeight.bold,
-                    //               color: Colors.white),
-                    //         ),
-                    //         IconButton(
-                    //           icon: Icon(
-                    //             Icons.add,
-                    //             color: Colors.white,
-                    //           ),
-                    //           onPressed: _incrementQuantity,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ],
-                    // ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              );
+            },
           ),
-        );
-      },
-    );
+        ));
   }
 }

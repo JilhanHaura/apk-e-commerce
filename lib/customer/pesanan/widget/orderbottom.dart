@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectmobile/customer/FormPemesanan/widget/Formpesanan.dart';
 import 'package:projectmobile/customer/dashboardScreen.dart';
 
 class OrderBottom extends StatelessWidget {
@@ -30,9 +31,7 @@ class OrderBottom extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DashboardScreen(
-                                      username: 'username',
-                                    )))
+                                builder: (context) => FormPemesanan()))
                       },
                   child: Text(
                     "Lanjutkan Pesanan",

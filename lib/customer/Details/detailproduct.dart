@@ -1,16 +1,36 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:projectmobile/customer/CartWidget/homechart.dart';
+import 'package:http/http.dart' as http;
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({Key? key}) : super(key: key);
-
+  const ProductDetailScreen({Key? key, required this.id}) : super(key: key);
+  final String id;
   @override
   _ProductDetailScreenState createState() => _ProductDetailScreenState();
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int _quantity = 1;
+  Map<String, dynamic>? data;
+  void getData() async {
+    var response = await http.get(Uri.parse(
+        'http://project3.test/new/getdetailproduct.php?id=${widget.id}'));
+    setState(() {
+      data = jsonDecode(response.body);
+    });
+    debugPrint("${data}");
+    // debugPrint(response.body);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
 
   void _incrementQuantity() {
     setState(() {
@@ -171,7 +191,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Baju Anak",
+                        data?['tittle'],
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -220,7 +240,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   SizedBox(height: 20.0),
                   Text(
-                    " Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.                    In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. ",
+                    data?['description'],
                     style: TextStyle(fontSize: 16.0),
                   ),
                   SizedBox(height: 20.0),
@@ -228,7 +248,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Rp 10000",
+                        'Rp.' + data?['price'],
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,

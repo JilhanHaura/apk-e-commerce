@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectmobile/login/LoginPage.dart';
 
 class AppBarTest extends StatelessWidget {
   // const AppBarTest({required this.username});
@@ -17,7 +18,7 @@ class AppBarTest extends StatelessWidget {
               child: TextButton(
                 onPressed: () => {},
                 child: Text(
-                  "Welcome Jilhan!!",
+                  "Welcome !!",
                   style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.normal,
@@ -28,7 +29,10 @@ class AppBarTest extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              },
               child: Icon(
                 Icons.people_alt_rounded,
                 size: 40,
