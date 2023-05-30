@@ -1,41 +1,40 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:projectmobile/admin/dashboard/kategori/updatekategori.dart';
 import 'package:projectmobile/admin/dashboard/sidebar.dart';
-import 'package:projectmobile/admin/form/product/addform.dart';
-import 'package:projectmobile/admin/dashboard/productDash/editproduct.dart';
+import 'package:projectmobile/admin/dashboard/pemesanan/detailpemesanr.dart';
+import 'package:projectmobile/admin/form/kategori/kategoriform.dart';
+import 'package:projectmobile/customer/FormPemesanan/widget/Formpesanan.dart';
 
-/// Flutter code sample for [DataTable].
-
-class dataproduct extends StatefulWidget {
-  const dataproduct({super.key});
+class dataUser extends StatefulWidget {
+  const dataUser({super.key});
 
   @override
-  State<dataproduct> createState() => _dataproductState();
+  State<dataUser> createState() => _dataUserState();
 }
 
-class _dataproductState extends State<dataproduct> {
-  List product = [];
+class _dataUserState extends State<dataUser> {
+  List user = [];
 
-  void getdataproduct() async {
-    String Url = "https://jilhan.000webhostapp.com/viewproduct.php";
+  void getDataUser() async {
+    String Url = "https://jilhan.000webhostapp.com/viewpemesanan.php";
     var response = await http.get(Uri.parse(Url));
     setState(() {
-      product = jsonDecode(response.body);
+      user = jsonDecode(response.body);
     });
   }
 
   void delete(String id) async {
-    String url = "https://jilhan.000webhostapp.com/deleteproduct.php";
-    await http.post(Uri.parse(url), body: {'id': id});
-    getdataproduct();
+    String Url = "";
+    await http.post(Uri.parse(Url), body: {'id': id});
+    getDataUser();
   }
 
   @override
   void initState() {
-    getdataproduct();
+    getDataUser();
     super.initState();
   }
 
@@ -57,7 +56,7 @@ class _dataproductState extends State<dataproduct> {
           ),
         ),
         body: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: Axis.vertical,
           child: Container(
             child: DataTable(
               columns: const <DataColumn>[
@@ -72,7 +71,7 @@ class _dataproductState extends State<dataproduct> {
                 ),
                 DataColumn(
                   label: Text(
-                    'Title',
+                    'Nama Pembeli',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15.0,
@@ -81,16 +80,7 @@ class _dataproductState extends State<dataproduct> {
                 ),
                 DataColumn(
                   label: Text(
-                    'Description',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.0,
-                        color: Colors.black),
-                  ),
-                ),
-                DataColumn(
-                  label: Text(
-                    'Price',
+                    'No Handphone',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15.0,
@@ -107,31 +97,24 @@ class _dataproductState extends State<dataproduct> {
                   ),
                 ),
               ],
-              rows: product.map((data) {
+              rows: user.map((data) {
                 return DataRow(
                   cells: <DataCell>[
                     DataCell(Text(data['id'])),
-                    DataCell(Text(data['tittle'])),
-                    DataCell(Text(data['description'])),
-                    DataCell(Text(data['price'].toString())),
+                    DataCell(Text(data['nama_pembeli'])),
+                    DataCell(Text(data['phone'])),
                     DataCell(
                       Row(
                         children: [
-                          IconButton(
-                            icon: Icon(Icons.update),
+                          ElevatedButton(
+                            // icon: Icon(Icons.details),
                             onPressed: () async {
                               var inserted = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          editproduct(id: data['id'])));
+                                      builder: (context) => detailUser()));
                             },
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () {
-                              delete(data["id"]);
-                            },
+                            child: Text("Details"),
                           ),
                         ],
                       ),
@@ -144,8 +127,8 @@ class _dataproductState extends State<dataproduct> {
         ),
         floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              var inserted = await Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => AddForm()));
+              var inserted = await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FormPemesanan()));
             },
             child: const Icon(CupertinoIcons.add_circled)));
   }

@@ -2,6 +2,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:projectmobile/customer/Appbar/appbar.dart';
 import 'package:projectmobile/customer/BestProduct/best.dart';
+import 'package:projectmobile/customer/CartWidget/cartbar.dart';
+import 'package:projectmobile/customer/CartWidget/cartbarwidget.dart';
 import 'package:projectmobile/customer/CartWidget/homechart.dart';
 import 'package:projectmobile/customer/Categori/CategoriProduct.dart';
 
@@ -116,8 +118,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               )),
           IconButton(
               onPressed: () => {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeCart()))
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CartWidget(
+                                  id: "id",
+                                )))
                   },
               icon: const Icon(
                 Icons.shopping_bag,

@@ -24,7 +24,7 @@ class _AddFormState extends State<AddForm> {
     final bool? isValid = _formKey.currentState?.validate();
 
     if (isValid == true) {
-      String url = "http://project3.test/new/addproduct.php";
+      String url = "https://jilhan.000webhostapp.com/addproduct.php";
       try {
         // DateTime now = DateTime.now();
         // time =

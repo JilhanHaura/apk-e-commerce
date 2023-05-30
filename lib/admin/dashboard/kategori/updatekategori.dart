@@ -14,7 +14,7 @@ class _UpdateCategorieState extends State<UpdateCategorie> {
 
   void loadDataKategori() async {
     String Url =
-        "http://project3.test/new/addkategoriproduct.php?id=${widget.id}";
+        "https://jilhan.000webhostapp.com/addkategoriproduct.php?id=${widget.id}";
     try {
       var response = await http.get(Uri.parse(Url));
       var result = jsonDecode(response.body);
@@ -25,7 +25,7 @@ class _UpdateCategorieState extends State<UpdateCategorie> {
   }
 
   void onUpdatePressed() async {
-    String Url = "http://project3.test/new/editkategori.php";
+    String Url = "https://jilhan.000webhostapp.com/editkategori.php";
     try {
       await http.post(Uri.parse(Url), body: {
         'id': widget.id,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectmobile/customer/CartWidget/cartbarwidget.dart';
 import 'package:projectmobile/customer/CartWidget/homechart.dart';
 
 class OrderBar extends StatefulWidget {
@@ -19,12 +20,16 @@ class _OrderBarState extends State<OrderBar> {
           IconButton(
             onPressed: () => {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomeCart()))
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CartWidget(
+                            id: "id",
+                          )))
             },
             icon: const Icon(
               Icons.arrow_back_ios_new,
               size: 30,
-              color: Color.fromARGB(255, 248, 154, 235),
+              color: Colors.pink,
             ),
           ),
           const Padding(
@@ -34,7 +39,7 @@ class _OrderBarState extends State<OrderBar> {
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 248, 154, 235)),
+                  color: Colors.pink),
             ),
           ),
           // Spacer(),

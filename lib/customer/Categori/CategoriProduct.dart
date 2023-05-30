@@ -14,7 +14,7 @@ class _kategoriState extends State<kategori> {
   List listData = [];
   void getData() async {
     var response = await http
-        .get(Uri.parse('http://project3.test/new/getcategoriproduct.php'));
+        .get(Uri.parse('https://jilhan.000webhostapp.com/getkategori.php'));
     setState(() {
       listData = jsonDecode(response.body);
     });
@@ -88,7 +88,7 @@ class _kategoriState extends State<kategori> {
             ),
             child: Row(
               children: [
-                for (int i = 1; i < 6; i++)
+                for (int i = 0; i < listData.length; i++)
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),

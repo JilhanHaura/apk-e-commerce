@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   String msg = '';
   Future<void> _login() async {
     final response = await http.post(
-      Uri.parse("http://project3.test/new/login.php"),
+      Uri.parse("https://jilhan.000webhostapp.com/login.php"),
       body: {
         "username": usernameController.text,
         "password": passwordController.text,
@@ -49,7 +49,8 @@ class _LoginPageState extends State<LoginPage> {
     final deviceHeight = MediaQuery.of(context).size.height;
     // final deviceWidht = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: SafeArea(
+        body: SafeArea(
+      child: SingleChildScrollView(
           child: Column(
         children: [
           Container(
@@ -167,6 +168,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ],
       )),
-    );
+    ));
   }
 }

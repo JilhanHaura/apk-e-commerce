@@ -16,7 +16,8 @@ class _editproductState extends State<editproduct> {
   final priceController = TextEditingController();
 
   void loadDataProduct() async {
-    String url = "http://project3.test/new/addproduct.php?id=${widget.id}";
+    String url =
+        "https://jilhan.000webhostapp.com/addproduct.php?id=${widget.id}";
     try {
       var response = await http.get(Uri.parse(url));
       var result = jsonDecode(response.body);
@@ -29,7 +30,7 @@ class _editproductState extends State<editproduct> {
   }
 
   void onUpdatePressed() async {
-    String url = "http://project3.test/new/update.php";
+    String url = "https://jilhan.000webhostapp.com/editproduct.php";
     try {
       await http.post(Uri.parse(url), body: {
         'id': widget.id,

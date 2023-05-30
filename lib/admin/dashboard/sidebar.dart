@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projectmobile/admin/dashboard/dashboard.dart';
 import 'package:projectmobile/admin/dashboard/kategori/datakategori.dart';
 import 'package:projectmobile/admin/dashboard/productDash/dataproduct.dart';
+import 'package:projectmobile/admin/dashboard/pemesanan/datapemesan.dart';
 import 'package:projectmobile/customer/dashboardScreen.dart';
 import 'package:projectmobile/login/LoginPage.dart';
 
@@ -65,7 +66,10 @@ class sidebar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.shopping_bag),
             title: Text('Pemesanan'),
-            onTap: () => null,
+            onTap: () => {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => dataUser()))
+            },
           ),
           Divider(),
           ListTile(

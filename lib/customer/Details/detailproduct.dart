@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:projectmobile/customer/CartWidget/cartbarwidget.dart';
 import 'package:projectmobile/customer/CartWidget/homechart.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,7 +18,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Map<String, dynamic>? data;
   void getData() async {
     var response = await http.get(Uri.parse(
-        'http://project3.test/new/getdetailproduct.php?id=${widget.id}'));
+        'https://jilhan.000webhostapp.com/getdetailproduct.php?id=${widget.id}'));
     setState(() {
       data = jsonDecode(response.body);
     });
@@ -260,7 +261,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomeCart()))
+                                  builder: (context) => CartWidget(
+                                        id: data?['id'],
+                                      )))
                         },
                         child: Text("Add to Cart"),
                         style: ButtonStyle(

@@ -14,8 +14,8 @@ class BestProduct extends StatefulWidget {
 class _BestProductState extends State<BestProduct> {
   List listData = [];
   void getData() async {
-    var response =
-        await http.get(Uri.parse('http://project3.test/new/getproduct.php'));
+    var response = await http
+        .get(Uri.parse('https://jilhan.000webhostapp.com/getproduct.php'));
     setState(() {
       listData = jsonDecode(response.body);
     });

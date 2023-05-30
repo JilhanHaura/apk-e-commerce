@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:projectmobile/admin/dashboard/kategori/datakategori.dart';
 import 'package:projectmobile/customer/dashboardScreen.dart';
 
 class CategoriForm extends StatefulWidget {
@@ -18,17 +19,13 @@ class _CategoriFormState extends State<CategoriForm> {
     final bool? isValid = _formKey.currentState?.validate();
 
     if (isValid == true) {
-      String url = "http://project3.test/new/addkategoriproduct.php";
+      String url = "https://jilhan.000webhostapp.com/addkategoriproduct.php";
       try {
         await http.post(Uri.parse(url), body: {
           'categories': categories,
         }).then((Response) => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DashboardScreen(
-                            username: 'username',
-                          )))
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => datakategori()))
             });
       } catch (exc) {
         debugPrint(exc.toString());

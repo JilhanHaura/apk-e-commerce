@@ -14,8 +14,8 @@ class DetailKategori extends StatefulWidget {
 class _DetailKategoriState extends State<DetailKategori> {
   List listData = [];
   void getData() async {
-    var response =
-        await http.get(Uri.parse('http://project3.test/new/getproduct.php'));
+    var response = await http
+        .get(Uri.parse('https://jilhan.000webhostapp.com/getproduct.php'));
     setState(() {
       listData = jsonDecode(response.body);
     });
@@ -224,7 +224,7 @@ class _DetailKategoriState extends State<DetailKategori> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16.0,
-                                color: Colors.green,
+                                color: Colors.pink,
                               ),
                             ),
                           ],

@@ -5,7 +5,7 @@ import 'package:projectmobile/customer/CartWidget/cartbarwidget.dart';
 import 'package:projectmobile/customer/CartWidget/cartbottombar.dart';
 
 class HomeCart extends StatelessWidget {
-  const HomeCart({super.key});
+  const HomeCart({super.key, required id});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +25,15 @@ class HomeCart extends StatelessWidget {
             child: Column(
               children: [
                 // panggil item widget
-                CartWidget()
+                // CartWidget(
+                //   id: 'id',
+                // )
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: CartBottom(),
+      // bottomNavigationBar: BottomCart(),
     );
   }
 }

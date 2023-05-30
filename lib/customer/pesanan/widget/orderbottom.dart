@@ -23,7 +23,7 @@ class OrderBottom extends StatelessWidget {
               width: double.infinity,
               height: 50,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 248, 154, 235),
+                color: Colors.pink,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: TextButton(

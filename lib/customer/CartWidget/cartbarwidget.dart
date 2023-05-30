@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:projectmobile/customer/pesanan/homeorder.dart';
 
 class CartWidget extends StatefulWidget {
-  const CartWidget({super.key});
+  const CartWidget({Key? key, required this.id}) : super(key: key);
+  final String id;
 
   @override
   State<CartWidget> createState() => _CartWidgetState();
@@ -10,6 +15,22 @@ class CartWidget extends StatefulWidget {
 
 class _CartWidgetState extends State<CartWidget> {
   int _quantity = 1;
+  Map<String, dynamic> datacart = {};
+
+  @override
+  void initState() {
+    super.initState();
+    getDataCart();
+  }
+
+  void getDataCart() async {
+    var response = await http.get(Uri.parse(
+        "https://jilhan.000webhostapp.com/getcart.php?id=${widget.id}"));
+    setState(() {
+      datacart = jsonDecode(response.body);
+    });
+    debugPrint("${datacart}");
+  }
 
   void _incrementQuantity() {
     setState(() {
@@ -19,150 +40,174 @@ class _CartWidgetState extends State<CartWidget> {
 
   void _decrementQuantity() {
     setState(() {
-      _quantity--;
+      if (_quantity > 1) {
+        _quantity--;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // for (int i = 1; i < 3; i++)
-        Container(
-          height: 110,
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            children: [
-              Container(
-                height: 70,
-                width: 70,
-                margin: EdgeInsets.all(10),
-                child: Image.network(
-                  "https://media.istockphoto.com/id/1307563401/id/foto/botol-bayi-cincin-gigi-serbet-dan-dot-diisolasi-di-latar-belakang-putih.jpg?s=2048x2048&w=is&k=20&c=peBQ1IRaYgFO_KBeYrsU9ong8b_ddwmqjPeSWqgP50U=",
-                ),
+    double totalPrice =
+        (double.parse(datacart['price'] ?? '0') ?? 0) * _quantity;
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Cart'),
+        ),
+        body: Column(
+          children: [
+            Container(
+              height: 110,
+              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Product Tittle",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+              child: Row(
+                children: [
+                  Container(
+                    height: 70,
+                    width: 70,
+                    margin: EdgeInsets.all(10),
+                    child: Image.network(
+                      "https://media.istockphoto.com/id/1307563401/id/foto/botol-bayi-cincin-gigi-serbet-dan-dot-diisolasi-di-latar-belakang-putih.jpg?s=2048x2048&w=is&k=20&c=peBQ1IRaYgFO_KBeYrsU9ong8b_ddwmqjPeSWqgP50U=",
                     ),
-                    Text(
-                      "Price",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              ),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () => {},
-                      icon: Icon(
-                        Icons.delete,
-                        size: 25,
-                        color: Colors.red,
-                      ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          datacart['tittle'] ?? "",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Rp. ${datacart['price'] ?? 0}",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                    //   Row(
-                    //     children: [
-                    //       Container(
-                    //         padding: EdgeInsets.all(5),
-                    //         decoration: BoxDecoration(
-                    //             color: Colors.white,
-                    //             borderRadius: BorderRadius.circular(2),
-                    //             boxShadow: [
-                    //               BoxShadow(
-                    //                   color: Colors.green.withOpacity(0.5),
-                    //                   spreadRadius: 1,
-                    //                   blurRadius: 10)
-                    //             ]),
-                    //         child: Icon(
-                    //           CupertinoIcons.plus,
-                    //           size: 18,
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         margin: EdgeInsets.symmetric(horizontal: 10),
-                    //         child: Text(
-                    //           "01",
-                    //           style: TextStyle(
-                    //               fontSize: 15,
-                    //               fontWeight: FontWeight.bold,
-                    //               color: Colors.black),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         padding: EdgeInsets.all(5),
-                    //         decoration: BoxDecoration(
-                    //             color: Colors.white,
-                    //             borderRadius: BorderRadius.circular(2),
-                    //             boxShadow: [
-                    //               BoxShadow(
-                    //                   color: Colors.green.withOpacity(0.5),
-                    //                   spreadRadius: 1,
-                    //                   blurRadius: 10)
-                    //             ]),
-                    //         child: Icon(
-                    //           CupertinoIcons.minus,
-                    //           size: 18,
-                    //         ),
-                    //       )
-                    //     ],
-                    //   )
-                    Row(
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         IconButton(
+                          onPressed: () {},
                           icon: Icon(
-                            Icons.remove,
-                            color: Color.fromARGB(255, 248, 154, 235),
+                            Icons.delete,
+                            size: 25,
+                            color: Colors.red,
                           ),
-                          onPressed: _quantity > 1 ? _decrementQuantity : null,
                         ),
-                        Text(
-                          _quantity.toString(),
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 248, 154, 235)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.remove,
+                                color: Colors.pink,
+                              ),
+                              onPressed: _decrementQuantity,
+                            ),
+                            Text(
+                              _quantity.toString(),
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.pink,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.add,
+                                color: Colors.pink,
+                              ),
+                              onPressed: _incrementQuantity,
+                            ),
+                            SizedBox(width: 10.0),
+                          ],
                         ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.add,
-                            color: Color.fromARGB(255, 248, 154, 235),
-                          ),
-                          onPressed: _incrementQuantity,
-                        ),
-                        SizedBox(width: 10.0),
                       ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            height: 130,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      'Rp. $totalPrice',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                      ),
                     ),
                   ],
                 ),
-              )
-            ],
+                Container(
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.pink,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeOrder(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Lakukan Pembayaran",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ));
   }
 }

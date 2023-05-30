@@ -17,7 +17,7 @@ class _datakategoriState extends State<datakategori> {
   List kategori = [];
 
   void getDataKategori() async {
-    String Url = "http://project3.test/new/viewkategori.php";
+    String Url = "https://jilhan.000webhostapp.com/viewkategori.php";
     var response = await http.get(Uri.parse(Url));
     setState(() {
       kategori = jsonDecode(response.body);
@@ -25,7 +25,7 @@ class _datakategoriState extends State<datakategori> {
   }
 
   void delete(String id) async {
-    String Url = "http://project3.test/new/deletekategori.php";
+    String Url = "https://jilhan.000webhostapp.com/deletekategori.php";
     await http.post(Uri.parse(Url), body: {'id': id});
     getDataKategori();
   }
