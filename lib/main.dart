@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const LoginPage(
           // id: 'id',
-          // username: 'username',
+          //     username: 'username',
           ),
       routes: <String, WidgetBuilder>{
         '/admin': (BuildContext context) => AdminDashboard(
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
             ),
         '/customer': (BuildContext context) => DashboardScreen(
               username: "username",
+              id: 'id',
             )
       },
     );

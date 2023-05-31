@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:projectmobile/customer/Details/detailproduct.dart';
 
 class DetailKategori extends StatefulWidget {
-  const DetailKategori({Key? key}) : super(key: key);
-
+  const DetailKategori({Key? key, required this.id}) : super(key: key);
+  final String id;
   @override
   State<DetailKategori> createState() => _DetailKategoriState();
 }
@@ -14,12 +14,12 @@ class DetailKategori extends StatefulWidget {
 class _DetailKategoriState extends State<DetailKategori> {
   List listData = [];
   void getData() async {
-    var response = await http
-        .get(Uri.parse('https://jilhan.000webhostapp.com/getproduct.php'));
+    var response = await http.get(Uri.parse(
+        'https://jilhan.000webhostapp.com/getproduct.php?kategori_id=${widget.id}'));
     setState(() {
       listData = jsonDecode(response.body);
     });
-    debugPrint("${listData}");
+    debugPrint("${widget.id}");
   }
 
   @override

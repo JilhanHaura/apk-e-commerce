@@ -81,6 +81,7 @@ class sidebar extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => DashboardScreen(
                             username: 'username',
+                            id: 'id',
                           )))
             },
           ),

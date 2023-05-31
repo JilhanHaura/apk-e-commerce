@@ -18,7 +18,7 @@ class _kategoriState extends State<kategori> {
     setState(() {
       listData = jsonDecode(response.body);
     });
-    debugPrint("${listData.length}");
+    debugPrint("${listData}");
   }
 
   @override
@@ -109,8 +109,9 @@ class _kategoriState extends State<kategori> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetailKategori()))
+                                          builder: (context) => DetailKategori(
+                                                id: listData[i]['id'],
+                                              )))
                                 },
                             child: Text(
                               listData[i]['categories'],

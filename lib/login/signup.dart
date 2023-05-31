@@ -20,15 +20,12 @@ class _SignUpState extends State<SignUp> {
     final String email = emailController.text;
     final String password = passwordController.text;
 
-    // Validasi email tidak boleh kosong
     if (email.isEmpty) {
       setState(() {
         msg = 'Email harus diisi';
       });
       return;
     }
-
-    // Validasi email tidak boleh duplikat
     final bool isEmailDuplicate = await checkEmailDuplicate(email);
     if (isEmailDuplicate) {
       setState(() {

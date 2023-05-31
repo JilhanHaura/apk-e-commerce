@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
@@ -15,10 +17,12 @@ class AddForm extends StatefulWidget {
 class _AddFormState extends State<AddForm> {
   final _formKey = GlobalKey<FormState>();
   String tittle = "";
+  String kategori_id = "";
   String description = "";
   String price = "";
   // String discount = "";
   // String time = "";
+  List listData = [];
 
   Future<void> onSubmitPressed() async {
     final bool? isValid = _formKey.currentState?.validate();
@@ -31,6 +35,7 @@ class _AddFormState extends State<AddForm> {
         //     "${now.year}-${now.month}-${now.day} ${now.hour}:${now.minute}:${now.second}";
         await http.post(Uri.parse(url), body: {
           'tittle': tittle,
+          'kategori_id': kategori_id,
           'description': description,
           'price': price,
           // 'time': time,
@@ -43,6 +48,22 @@ class _AddFormState extends State<AddForm> {
         debugPrint(exc.toString());
       }
     }
+  }
+
+  void getKategori() async {
+    var response = await http
+        .get(Uri.parse('https://jilhan.000webhostapp.com/getkategori.php'));
+    setState(() {
+      listData = jsonDecode(response.body);
+      kategori_id = listData.first['id'];
+    });
+    debugPrint("${listData}");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getKategori();
   }
 
   @override
@@ -101,6 +122,33 @@ class _AddFormState extends State<AddForm> {
                   },
                   onChanged: ((value) => tittle = value),
                 )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButton<String>(
+                value: kategori_id!,
+                hint: Text('kategori'),
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 16,
+                style: const TextStyle(color: Colors.deepPurple),
+                underline: Container(
+                  height: 2,
+                  color: Colors.deepPurpleAccent,
+                ),
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    kategori_id = value!;
+                  });
+                },
+                items: [
+                  for (var i = 0; i < listData.length; i++)
+                    DropdownMenuItem<String>(
+                      value: listData[i]['id'],
+                      child: Text(listData[i]['categories']),
+                    )
+                ],
+              ),
+            ),
             Padding(
                 padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
                 child: TextFormField(

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:projectmobile/customer/Appbar/appbar.dart';
@@ -6,16 +8,29 @@ import 'package:projectmobile/customer/CartWidget/cartbar.dart';
 import 'package:projectmobile/customer/CartWidget/cartbarwidget.dart';
 import 'package:projectmobile/customer/CartWidget/homechart.dart';
 import 'package:projectmobile/customer/Categori/CategoriProduct.dart';
+import 'package:http/http.dart' as http;
 
 class DashboardScreen extends StatefulWidget {
   // const DashboardScreen({Key? key}) : super(key: key);
-  const DashboardScreen({required this.username});
+  const DashboardScreen({super.key, required this.username, required this.id});
   final String username;
+  final String id;
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  // final TextEditingController searchController = TextEditingController();
+  // List search = [];
+  // void searchData() async {
+  //   var response = await http.get(Uri.parse(
+  //       "https://jilhan.000webhostapp.com/search.php?id=${widget.id}"));
+  //   setState(() {
+  //     search = jsonDecode(response.body);
+  //   });
+  //   debugPrint("${search}");
+  // }
+
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
@@ -43,6 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         height: 50,
                         width: 300,
                         child: TextFormField(
+                          // controller: SearchController,
                           decoration: const InputDecoration(
                               border: InputBorder.none,
                               hintText: "Search Here...."),
