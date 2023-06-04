@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:projectmobile/admin/dashboard/sidebar.dart';
 import 'package:projectmobile/customer/Appbar/appbar.dart';
 import 'package:projectmobile/customer/BestProduct/best.dart';
 import 'package:projectmobile/customer/CartWidget/cartbar.dart';
@@ -36,9 +37,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // ignore: unused_local_variable
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: sidebar(),
+      appBar: AppBar(
+        title: Text("Welcome "),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: <Color>[
+                Color.fromARGB(255, 248, 154, 235),
+                Color.fromARGB(255, 175, 207, 233)
+              ])),
+        ),
+      ),
       body: ListView(
         children: [
-          AppBarTest(),
+          // AppBarTest(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Stack(

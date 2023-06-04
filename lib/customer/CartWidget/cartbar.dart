@@ -18,8 +18,8 @@ class CartBar extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => DashboardScreen(
-                            username: 'username',
                             id: 'id',
+                            username: 'username',
                           )))
             },
             icon: const Icon(

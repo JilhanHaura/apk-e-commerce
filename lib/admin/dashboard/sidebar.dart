@@ -39,12 +39,12 @@ class sidebar extends StatelessWidget {
             leading: Icon(Icons.dashboard),
             title: Text('Dashboard'),
             onTap: () => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AdminDashboard(
-                            username: 'username',
-                          )))
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => AdminDashboard(
+              //               username: 'username',
+              //             )))
             },
           ),
           ListTile(

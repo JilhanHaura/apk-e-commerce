@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:projectmobile/customer/FormPemesanan/pesanan.dart';
 import 'package:projectmobile/customer/pesanan/homeorder.dart';
 
 class CartWidget extends StatefulWidget {
@@ -191,7 +192,9 @@ class _CartWidgetState extends State<CartWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomeOrder(),
+                          builder: (context) => const Pemesanan(
+                            id: 'id',
+                          ),
                         ),
                       );
                     },
